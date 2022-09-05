@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>caixa eletronico</title>
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./style.css">
+    
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NoBank</h1>
+        </header>
+        <main>
+            <section>
+                <div class="main-box">
+                    <div id="extrato-container" class="botao-container">
+                        <button class="botao" id="extrato-button" onclick="extratoNaTela()">Extrato</button>
+                        <select size="20" id="extratoFront" ></select>
+                        
+                    </div>
+                    <div class="botoes01">
+                        <div class="botao-container">
+                            <button class="botao" id="depositar-button" onclick="depositar()">Depositar</button>
+                            <input placeholder="Digite aqui"  class="operation" id="depositar" type="number">
+                            
+                        </div>
+                        <div class="botao-container">
+                            <button class="botao" id="sacar-button" onclick="sacar()">Sacar</button>
+                            <input placeholder="Digite aqui" class="operation" id="sacar" type="number">
+                            
+                        </div>
+                        <div class="botao-container">
+                            <h2 id="saldo-txt">Seu Saldo:</h2>
+                            <p class="operation-saldo" id="saldoNaTela" ></p>
+                        </div>
+                    </div>
+                </div>
+                
+            
+            </section>
+
+            
+        </main>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        saldo01()
+        
+        
+        //botoes
+        let saldoButton = document.getElementById('saldo-button')
+        let depositarButton = document.getElementById('depositar-button')
+        let SacarButton = document.getElementById('sacar-button')
+        let ExtratoButton = document.getElementById('extrato-button')
+
+        function sacar(){
+            let sacarHtml = document.getElementById('sacar')
+            valor = Number(sacarHtml.value)
+            if(valor > 0 ){
+                debitarDinheiro(valor)
+                sacarHtml.value = ''
+                saldoNaTela.innerHTML = consultarSaldo()
+            }
+            else{
+                window.alert('valor inválido')
+            }
+            
+        }
+        function depositar(){
+            let depositarHtml = document.getElementById('depositar')
+            valor = Number(depositarHtml.value)
+            if(valor > 0){
+                creditarDinheiro(valor)
+                depositarHtml.value = ''
+                saldoNaTela.innerHTML = consultarSaldo()
+            }
+            else{
+                window.alert('valor inválido')
+            }
+            
+        }
+        function saldo01(){
+            let saldoNaTela = document.getElementById('saldoNaTela')
+            saldoNaTela.innerHTML = consultarSaldo()
+        }
+        function extratoNaTela(){
+            const extratoFinal = consultarExtrato();
+            console.log("imprimir extrato final")
+            var element = document.getElementById('extratoFront');
+            element.innerHTML=''
+            
+
+            for(let index = 0; index < extratoFinal.length; index ++){
+                var  linhaEstrato = document.createElement('option')
+                linhaEstrato.text = `${extratoFinal[index]}`;
+                element.appendChild(linhaEstrato);
+                console.log(index + " - " + extratoFinal[index]);
+                
+            }
+
+        }
+
+    </script>
+</body>
+</html>
